@@ -1,4 +1,5 @@
-import { Client } from "whatsapp-web.js";
+import pkg from "whatsapp-web.js";
+const {client, LocalAuth} = pkg;
 import { default as qrcode } from "qrcode-terminal";
 import { ChatGPTAPI } from "chatgpt";
 import { config } from "dotenv";
@@ -10,7 +11,12 @@ export const api = new ChatGPTAPI({
   apiKey: process.env.CHAT_GPT_API_KEY!,
 });
 
-const client = new Client({});
+const client = new Client({
+authStrategy: new LocalAuth(),
+  puppeteer: {
+    args: ['--no-sandbox'],
+  },
+  });
 
 client.on("qr", (qr) => {
   // Generate and scan this code with your phone
@@ -18,7 +24,7 @@ client.on("qr", (qr) => {
 });
 
 client.on("ready", () => {
-  console.log("Client is ready!");
+  console.log("Jerry is ready!");
 });
 
 client.on("message_create", async (msg) => {
