@@ -1,5 +1,5 @@
 import pkg from "whatsapp-web.js";
-const {client, LocalAuth} = pkg;
+const { Client, LocalAuth } = pkg;
 import { default as qrcode } from "qrcode-terminal";
 import { ChatGPTAPI } from "chatgpt";
 import { config } from "dotenv";
