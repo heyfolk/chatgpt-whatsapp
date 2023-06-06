@@ -13,7 +13,7 @@ export async function handleMessage(message: WAWebJS.Message) {
   const { command, args } = getCommand(message.body);
 
   switch (command) {
-    case "/chatgpt":
+    case ".gpt":
       await commandChatGPT(message, args);
       return;
   }
@@ -27,7 +27,7 @@ export async function handleMessage(message: WAWebJS.Message) {
   const reply = await api.sendMessage(message.body, {
     parentMessageId: room.parentMessageId,
   });
-  message.reply("🤖: " + reply.text);
+  message.reply(reply.text + "\n\n🧑🏻‍💻: *Made By Fardeen Beigh*");
   rooms.set(chat.id.user, {
     parentMessageId: reply.id,
   });
@@ -41,21 +41,22 @@ async function commandChatGPT(message: WAWebJS.Message, args: string[]) {
       parentMessageId: myParentMessageId,
     });
     myParentMessageId = reply.id;
-    message.reply("🤖: " + reply.text);
+    message.reply(reply.text + "\n🧑🏻‍💻: *Made By Fardeen Beigh*");
     return;
   }
   if (args[0] === "on") {
     chat.sendStateTyping();
     const reply = await api.sendMessage(
-      "hello, my name is " + chat.name,
+      "hello, my name is " + chat.name +
+      "\n Made By Fardeen Beigh",
     );
 
     rooms.set(chat.id.user, {
       parentMessageId: reply.id,
     });
     message.reply(
-      "🤖: ChatGPT will be responded to your messages from now on...\n🤖: " +
-        reply.text,
+      "🤖: ChatGPT will be responded to your messages from now on...\n©️: " +
+     "Made By Fardeen Beigh",
     );
   } else if (args[0] === "off") {
     chat.sendStateTyping();
